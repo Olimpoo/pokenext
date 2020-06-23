@@ -2,7 +2,7 @@ import Pokedex from './config';
 
 export default async (req, res) => {
   const interval = {
-    limit: 20,
+    limit: req.query.limit || 20,
     offset: 0,
   };
 
