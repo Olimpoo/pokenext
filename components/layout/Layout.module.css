@@ -1,0 +1,25 @@
+.Layout__container {
+  max-width: 36rem;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
+}
+
+.Layout__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Layout__headerImage {
+  width: 6rem;
+  height: 6rem;
+}
+
+.Layout__headerHomeImage {
+  width: 8rem;
+  height: 8rem;
+}
+
+.Layout__backToHome {
+  margin: 3rem 0 0;
+}
