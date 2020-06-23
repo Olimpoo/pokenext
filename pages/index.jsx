@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
 export default function Home() {
   return (
@@ -10,13 +10,13 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          Welcome to 
+          Welcome to
           {' '}
           <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className="description">
-          Get started by editing 
+          Get started by editing
           {' '}
           <code>pages/index.js</code>
         </p>
@@ -214,5 +214,5 @@ export default function Home() {
       `}
       </style>
     </div>
-  )
+  );
 }
