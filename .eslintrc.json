@@ -2,37 +2,15 @@
   "env": {
     "browser": true,
     "es2020": true,
-    "es6": true,
     "node": true
   },
-  // "parser": "babel-eslint",
-  "extends": [
-    "eslint:recommended",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:jsx-a11y/recommended",
-    // "plugin:react-hooks/recommended",
-    // always put prettier at last
-    "prettier"
-  ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
+  "extends": ["plugin:react/recommended", "airbnb"],
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true // enable linting for jsx files
+      "jsx": true
     },
     "ecmaVersion": 11,
     "sourceType": "module"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
@@ -47,7 +25,13 @@
       }
     ],
     // NextJs specific fix: allow jsx syntax in js files
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ], //should add ".ts" if typescript project
     "react/display-name": 1
-  }
+  },
+  "globals": { "React": "writable" }
 }
