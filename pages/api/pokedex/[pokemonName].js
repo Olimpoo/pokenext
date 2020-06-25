@@ -5,7 +5,7 @@ export default async (req, res) => {
     query: { pokemonName },
   } = req;
   try {
-    const pokemon = await Pokedex.getPokemonByName(pokemonName);
+    const pokemon = await Pokedex.getPokemonSpeciesByName(pokemonName);
     res.status(200).json({
       success: true,
       message: 'Pokémon listed!',
