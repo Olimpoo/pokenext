@@ -21,25 +21,23 @@ async function connectToDatabase(uri) {
 }
 
 module.exports = async (req, res) => {
-  const interval = {
-    limit: req.query.limit || 20,
-    offset: req.query.offset || 0,
-  };
+  const limit = parseFloat(req.query.limit) || 20;
+  const skip = parseFloat(req.query.skip) || 0;
 
   try {
     const db = await connectToDatabase(process.env.MONGODB_URI);
-
     const collection = await db.collection('pokedex');
+
     const pokedex = await collection.find({})
-      .skip(parseFloat(interval.offset))
-      .limit(parseFloat(interval.limit))
+      .skip(skip)
+      .limit(limit)
       .toArray();
 
     res.status(200).json({
       success: true,
       message: 'Pokémon listed!',
-      next: `api/pokedex?offset=${parseFloat(interval.offset) + parseFloat(interval.limit)}&limit=${interval.limit}`,
-      previous: parseFloat(interval.offset) === 0 ? null : `api/pokedex?offset=${parseFloat(interval.offset) - parseFloat(interval.limit)}&limit=${interval.limit}`,
+      next: `api/pokedex?skip=${skip + limit}&limit=${limit}`,
+      previous: skip === 0 ? null : `api/pokedex?skip=${skip - limit}&limit=${limit}`,
       pokedex,
     });
   } catch (error) {
