@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "mongodb": "^3.5.9",
     "next": "9.4.4",
     "pokeapi-js-wrapper": "^1.1.2",
     "react": "16.13.1",

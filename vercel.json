@@ -1,0 +1,8 @@
+{
+    "name": "Pokénext",
+    "version": 2,
+    "env": {
+      "MONGODB_URI": "@mongo-uri"
+    }
+  }
+  
