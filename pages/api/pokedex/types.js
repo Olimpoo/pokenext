@@ -26,6 +26,7 @@ export default async (req, res) => {
     const types = await Pokedex.getTypesList();
     types.results = await types.results.map((type, i) => ({
       ...type,
+      url: `api/pokedex/filter?type=${type.name}`,
       color: colors[i],
     }));
 
