@@ -28,9 +28,10 @@ module.exports = async (req, res) => {
     const db = await connectToDatabase(process.env.MONGODB_URI);
     const collection = await db.collection('pokedex');
 
-    const pokedex = await collection.find({})
+    const pokedex = await collection.find({}, { _id: 0 })
       .skip(skip)
       .limit(limit)
+      .project({ _id: 0 })
       .toArray();
 
     res.status(200).json({
