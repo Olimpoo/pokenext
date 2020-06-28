@@ -1,47 +1,41 @@
-import Pokedex from './config';
+const url = require('url');
+const { MongoClient } = require('mongodb');
 
-export default async (req, res) => {
-  const colors = [
-    '#575738',
-    '#A12721',
-    '#5628E2',
-    '#833483',
-    '#695316',
-    '#61551F',
-    '#51580E',
-    '#705898',
-    '#565681',
-    '#AF510D',
-    '#1C59E9',
-    '#437C27',
-    '#896F06',
-    '#DC0949',
-    '#2D7B7B',
-    '#7038F8',
-    '#705848',
-    '#D23747',
-  ];
+let cachedDb = null;
 
+async function connectToDatabase(uri) {
+  if (cachedDb) {
+    return cachedDb;
+  }
+
+  const client = await MongoClient.connect(uri,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+  const db = await client.db(url.parse(uri).pathname.substr(1));
+
+  cachedDb = db;
+  return db;
+}
+
+module.exports = async (req, res) => {
   try {
-    const types = await Pokedex.getTypesList();
-    types.results = await types.results.map((type, i) => ({
-      ...type,
-      url: `api/pokedex/filter?type=${type.name}`,
-      color: colors[i],
-    }));
+    const db = await connectToDatabase(process.env.MONGODB_URI);
+    const collection = await db.collection('types');
 
-    await types.results.pop();
-    await types.results.pop();
+    const types = await collection.find({}).project({ _id: 0 }).toArray();
 
     res.status(200).json({
       success: true,
-      message: 'Pokémon listed!',
+      message: 'Types listed!',
       types,
     });
-  } catch (err) {
-    res.status(500).json({
+  } catch (error) {
+    res.status(200).json({
       success: false,
-      message: err,
+      message: error,
     });
   }
 };

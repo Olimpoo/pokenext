@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
     const db = await connectToDatabase(process.env.MONGODB_URI);
     const collection = await db.collection('pokedex');
 
-    const pokedex = await collection.find({}, { _id: 0 })
+    const pokedex = await collection.find({})
       .skip(skip)
       .limit(limit)
       .project({ _id: 0 })
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Pokémon listed!',
-      next: `api/pokedex?skip=${skip + limit}&limit=${limit}`,
+      next: skip >= 800 ? null : `api/pokedex?skip=${skip + limit}&limit=${limit}`,
       previous: skip === 0 ? null : `api/pokedex?skip=${skip - limit}&limit=${limit}`,
       pokedex,
     });
