@@ -1,4 +1,4 @@
-import Pokedex from './config';
+import Pokedex from './pokeapi';
 
 export default async (req, res) => {
   const {
